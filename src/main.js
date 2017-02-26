@@ -8,6 +8,10 @@ import {reducer as formReducer} from 'redux-form'
 import {Router, Route, browserHistory} from 'react-router'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 
+
+//TODO: setup react-rouser-redux to sync up redux and react for 
+  //and get actionsCreators for browserHistory/etc.
+
 // import reducer
 import appReducer from './reducer'
 
@@ -25,11 +29,15 @@ store.subscribe(() => {
   console.log('____STATE____', store.getState())
 })
 
+let Gallery = () => 
+  <h1> gallery </h1>
+
 let App = () => 
   <div>
     <Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={Landing} />
+        <Route path='/gallery' component={Gallery} />
       </Router>
     </Provider>
   </div>

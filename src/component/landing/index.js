@@ -2,12 +2,15 @@
 
 import React from 'react'
 import {connect} from 'react-redux'
+import {browserHistory} from 'react-router'
 
 import FormLogin from '../form-login'
 import FormSignup from '../form-signup'
 import {loginRequest, signupRequest} from '../../action/auth-actions.js'
 
-const mapStateToProps = (state, ownProps) => ownProps
+const mapStateToProps = (state, ownProps) => ({
+  ...ownProps, loggedIn: !!state.app.auth.token
+})
 
 const mapDispatchToProps = dispatch => ({
   loginHandleSubmit: (values) => {
@@ -20,13 +23,13 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-let Landing = ({loginHandleSubmit, signupHandleSubmit}) => {
-  return <div className="landing">
+let Landing = ({loginHandleSubmit, signupHandleSubmit, loggedIn}) => 
+  <div className="landing">
     <h1> landing </h1>
     <FormLogin onSubmit={loginHandleSubmit}/>
     <FormSignup onSubmit={signupHandleSubmit}/>
   </div>
-  }
+  
 
 Landing = connect(mapStateToProps, mapDispatchToProps)(Landing)
 
