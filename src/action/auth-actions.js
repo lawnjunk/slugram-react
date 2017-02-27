@@ -27,12 +27,37 @@ export let tokenRequestFail = (err) => {
 }
 
 // ASYNC ACTIONS
+export let tokenRequestSuccess = (token) => (dispatch) => {
+  try {
+    window.localStorage.token = JSON.stringify(token)
+  } catch( err) {
+    console.error(err)  
+  }
+  dispatch(tokenSave(token))
+  return Promise.resolve(token)
+}
+
+export let tokenFetch = (goTo) => 
+ (dispatch, getState) => {
+  let token = getState().app.auth.token
+  if(token) 
+    return Promise.resolve(token)
+  try {
+    let decoded = JSON.parse(window.localStorage.token)
+    dispatch(tokenRequestSuccess(decoded))
+    return Promise.resolve(decoded)
+  } catch(err) {
+    dispatch(tokenRequestFail)
+    return Promise.reject(err)
+  }
+}
+
 export let loginRequest = (auth) => (dispatch) => {
   console.log('loginRequest')
   dispatch(tokenRequestStart())
   dispatch(resetForm('login'))
   return axios.get(`${__API_URL__}/login`, {auth})
-  .then(res => dispatch(tokenSave(res.data)))
+  .then(res => dispatch(tokenRequestSuccess(res.data)))
   .catch(err => dispatch(tokenRequestFail(err)))
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Field, reduxForm} from 'redux-form' 
 
-let FormLogin  = ({handleSubmit}) => 
+let AuthLogin  = ({handleSubmit}) => 
     <form className="form-login" onSubmit={handleSubmit} >
       <Field 
         type="text" 
@@ -18,6 +18,6 @@ let FormLogin  = ({handleSubmit}) =>
       <button type="submit"> submit </button>
     </form>
 
-FormLogin = reduxForm({form: 'login'})(FormLogin)
+AuthLogin = reduxForm({form: 'login'})(AuthLogin)
 
-export default FormLogin
+export default AuthLogin

@@ -3,7 +3,7 @@
 import React from 'react'
 import {Field, reduxForm} from 'redux-form'
 
-let FormSignup = ({handleSubmit}) => 
+let AuthSignup = ({handleSubmit}) => 
   <form className="form-signup" onSubmit={handleSubmit}>
     <Field
       type="text"
@@ -27,6 +27,6 @@ let FormSignup = ({handleSubmit}) =>
   </form>
 
 
-FormSignup = reduxForm({form: 'signup'})(FormSignup)
+AuthSignup = reduxForm({form: 'signup'})(AuthSignup)
 
-export default FormSignup
+export default AuthSignup
