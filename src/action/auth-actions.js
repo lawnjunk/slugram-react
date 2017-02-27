@@ -19,15 +19,15 @@ export let tokenRequestStart = () => {
   }
 }
 
-export let tokenRequestFail = (err) => {
-  console.error('tokenRequestFail', err)
+export let authRequestFail = (err) => {
+  console.error('authRequestFail', err)
   return {
     type: 'TOKEN_REQUEST_FAIL',
   }
 }
 
-// ASYNC ACTIONS
-export let tokenRequestSuccess = (token) => (dispatch) => {
+// ASYNC THUNK ACTIONS
+export let tokenStore = (token) => (dispatch) => {
   try {
     window.localStorage.token = JSON.stringify(token)
   } catch( err) {
@@ -37,18 +37,19 @@ export let tokenRequestSuccess = (token) => (dispatch) => {
   return Promise.resolve(token)
 }
 
-export let tokenFetch = (goTo) => 
- (dispatch, getState) => {
-  let token = getState().app.auth.token
-  if(token) 
-    return Promise.resolve(token)
-  try {
-    let decoded = JSON.parse(window.localStorage.token)
-    dispatch(tokenRequestSuccess(decoded))
-    return Promise.resolve(decoded)
-  } catch(err) {
-    dispatch(tokenRequestFail)
-    return Promise.reject(err)
+export let tokenFetch = (goTo) => {
+   return (dispatch, getState) => {
+    let token = getState().app.auth.token
+    if(token) 
+      return Promise.resolve(token)
+    try {
+      token = JSON.parse(window.localStorage.token)
+      dispatch(tokenSave(token))
+      return Promise.resolve(token)
+    } catch(err) {
+      dispatch(authRequestFail(err))
+      return Promise.reject(err)
+    }
   }
 }
 
@@ -57,8 +58,8 @@ export let loginRequest = (auth) => (dispatch) => {
   dispatch(tokenRequestStart())
   dispatch(resetForm('login'))
   return axios.get(`${__API_URL__}/login`, {auth})
-  .then(res => dispatch(tokenRequestSuccess(res.data)))
-  .catch(err => dispatch(tokenRequestFail(err)))
+  .then(res => dispatch(tokenStore(res.data)))
+  .catch(err => dispatch(authRequestFail(err)))
 }
 
 export let signupRequest = (user) => (dispatch) => {
@@ -66,6 +67,6 @@ export let signupRequest = (user) => (dispatch) => {
   dispatch(tokenRequestStart())
   dispatch(resetForm('signup'))
   return axios.post(`${__API_URL__}/signup`, user)
-  .then(res => dispatch(tokenSave(res.data)))
-  .catch(err => tokenRequestFail(tokenRequestFail(err)))
+  .then(res => dispatch(tokenStore(res.data)))
+  .catch(err => authRequestFail(authRequestFail(err)))
 }
