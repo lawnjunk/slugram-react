@@ -7,8 +7,11 @@ let galleryReducer = (state=[], action) => {
       return [action.gallery, ...state]
     case 'GALLERY_SET_ALL':
       console.log('gallery set all', action.gallerys)
+      return action.gallerys
+    case 'GALLERY_DELETE':
+      console.log('gallery delete', action.gallery)
+      return state.filter(g => g._id !== action.gallery._id)
     return action.gallerys
-
     default:
       return state
   }

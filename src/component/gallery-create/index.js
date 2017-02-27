@@ -5,7 +5,6 @@ import {Field, reduxForm} from 'redux-form'
 
 let GalleryCreate = ({handleSubmit}) => 
   <form className="gallery-create" onSubmit={handleSubmit}>
-
     <Field
       type="text"
       name="name"
@@ -21,7 +20,7 @@ let GalleryCreate = ({handleSubmit}) =>
     <button type="submit"> create gallery </button>
   </form>
 
-GalleryCreate = reduxForm({form: 'gallerycreate'})(GalleryCreate)
+GalleryCreate = reduxForm({form: 'galleryCreate'})(GalleryCreate)
 
 export default GalleryCreate
 

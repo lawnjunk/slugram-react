@@ -9,9 +9,6 @@ import {Router, Route, browserHistory} from 'react-router'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {syncHistoryWithStore, routerReducer} from 'react-router-redux'
 
-//TODO: setup react-rouser-redux to sync up redux and react for 
-  //and get actionsCreators for browserHistory/etc.
-
 // import reducer
 import appReducer from './reducer'
 

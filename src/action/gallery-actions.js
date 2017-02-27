@@ -45,4 +45,14 @@ export let galleryCreate = (gallery) => (dispatch) =>
   .then(res => dispatch(galleryAdd(res.data)))
   .catch(console.error)
 
-
+export let galleryDeleteRequest = (gallery) => (dispatch) => 
+  dispatch(tokenFetch())
+  .then((token) => {
+    let url = `${__API_URL__}/gallery/${gallery._id}`
+    let headers = {
+      Authorization: `Bearer ${token}`
+    }
+    return axios.delete(url, {headers})
+  })
+  .then(res => dispatch(galleryDelete(gallery)))
+  .catch(console.error)

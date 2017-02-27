@@ -3,6 +3,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {browserHistory} from 'react-router'
+import {reset as resetForm} from 'redux-form'
 
 import AuthLogin from '../auth-login'
 import AuthSignup from '../auth-signup'
@@ -19,11 +20,13 @@ const mapDispatchToProps = dispatch => ({
     console.log('loginHandleSubmit')
     dispatch(loginRequest(values))
     .then(() => browserHistory.push('/gallery'))
+    .catch(() => resetForm('login'))
   },
   signupHandleSubmit: (values) => {
     console.log('signupHandleSubmit')
     dispatch(signupRequest(values))
     .then(() => browserHistory.push('/gallery'))
+    .catch(() => resetForm('signup'))
   },
 })
 

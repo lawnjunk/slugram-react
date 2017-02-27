@@ -2,10 +2,12 @@
 
 import React from 'react'
 import {connect} from 'react-redux'
+import {reset as resetForm} from 'redux-form'
 import {galleryCreate, galleryFetchAll} from '../../action/gallery-actions.js'
 
-import authCheckDecorator from '../auth-check'
+import GalleryItem from '../gallery-item'
 import GalleryCreate from '../gallery-create'
+import authCheckDecorator from '../auth-check'
 
 let mapStateToProps = (state, props) => ({
   ...props,
@@ -19,6 +21,7 @@ let mapDispatchToProps = (dispatch) => ({
   galleryCreateHandleSubmit: (values) => {
     console.log('galleryCreateHandleSubmit', values)
     dispatch(galleryCreate(values))
+    .then(() => dispatch(resetForm('galleryCreate')))
   },
 })
 
@@ -32,7 +35,7 @@ class Gallery extends React.Component {
     return (
       <div className='gallery'>
         <GalleryCreate onSubmit={this.props.galleryCreateHandleSubmit} />
-        {this.props.gallerys.map(gal => <p key={gal._id}> {gal.name} </p> )}
+        {this.props.gallerys.map(gal => <GalleryItem key={gal._id} gallery={gal} /> )}
       </div>
     )
   }

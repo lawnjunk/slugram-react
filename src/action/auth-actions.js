@@ -1,7 +1,6 @@
 'use strict'
 
 import axios from 'axios'
-import {reset as resetForm} from 'redux-form'
 
 // SYNC ACTIONS
 export let tokenSave = (token) => {
@@ -56,7 +55,6 @@ export let tokenFetch = (goTo) => {
 export let loginRequest = (auth) => (dispatch) => {
   console.log('loginRequest')
   dispatch(tokenRequestStart())
-  dispatch(resetForm('login'))
   return axios.get(`${__API_URL__}/login`, {auth})
   .then(res => dispatch(tokenStore(res.data)))
   .catch(err => dispatch(authRequestFail(err)))
@@ -65,7 +63,6 @@ export let loginRequest = (auth) => (dispatch) => {
 export let signupRequest = (user) => (dispatch) => {
   console.log('signupRequest')
   dispatch(tokenRequestStart())
-  dispatch(resetForm('signup'))
   return axios.post(`${__API_URL__}/signup`, user)
   .then(res => dispatch(tokenStore(res.data)))
   .catch(err => authRequestFail(authRequestFail(err)))
