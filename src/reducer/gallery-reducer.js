@@ -11,6 +11,9 @@ let galleryReducer = (state=[], action) => {
     case 'GALLERY_DELETE':
       console.log('gallery delete', action.gallery)
       return state.filter(g => g._id !== action.gallery._id)
+    case 'GALLERY_UPDATE':
+      console.log('gallery update', action.gallery)
+      return state.map(g => g._id === action.gallery._id ? action.gallery : g )
     return action.gallerys
     default:
       return state

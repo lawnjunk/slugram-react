@@ -30,6 +30,8 @@ store.subscribe(() => {
 
 const history = syncHistoryWithStore(browserHistory, store)
 
+document.createElement('h1')
+
 let App = () => 
   <div>
     <Provider store={store}>

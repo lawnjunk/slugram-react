@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {reset as resetForm} from 'redux-form'
 import {galleryCreate, galleryFetchAll} from '../../action/gallery-actions.js'
 
+import PhotoCreate from '../photo-create'
 import GalleryItem from '../gallery-item'
 import GalleryCreate from '../gallery-create'
 import authCheckDecorator from '../auth-check'
@@ -36,6 +37,9 @@ class Gallery extends React.Component {
       <div className='gallery'>
         <GalleryCreate onSubmit={this.props.galleryCreateHandleSubmit} />
         {this.props.gallerys.map(gal => <GalleryItem key={gal._id} gallery={gal} /> )}
+        {this.props.gallerys[0] && this.props.gallerys[0]._id}
+
+        //<PhotoCreate gallery={this.props.gallerys[0]} />
       </div>
     )
   }
